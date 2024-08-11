@@ -1,0 +1,8 @@
+{
+  "type": "client-python",
+  "require": {
+    "deutschland-api/sdk": {
+      "target": "./src/sdk"
+    }
+  }
+}
