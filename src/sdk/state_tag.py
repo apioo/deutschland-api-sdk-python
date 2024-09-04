@@ -8,7 +8,7 @@ import sdkgen
 from requests import RequestException
 from typing import List
 
-from .message_exception import MessageException
+from .response_exception import ResponseException
 from .state import State
 from .state_collection import StateCollection
 
@@ -39,11 +39,11 @@ class StateTag(sdkgen.TagAbstract):
                 return State.model_validate_json(json_data=response.content)
 
             if response.status_code == 400:
-                raise MessageException(response.content)
+                raise ResponseException(response.content)
             if response.status_code == 404:
-                raise MessageException(response.content)
+                raise ResponseException(response.content)
             if response.status_code == 500:
-                raise MessageException(response.content)
+                raise ResponseException(response.content)
 
             raise sdkgen.UnknownStatusCodeException("The server returned an unknown status code")
         except RequestException as e:
@@ -72,11 +72,11 @@ class StateTag(sdkgen.TagAbstract):
                 return StateCollection.model_validate_json(json_data=response.content)
 
             if response.status_code == 400:
-                raise MessageException(response.content)
+                raise ResponseException(response.content)
             if response.status_code == 404:
-                raise MessageException(response.content)
+                raise ResponseException(response.content)
             if response.status_code == 500:
-                raise MessageException(response.content)
+                raise ResponseException(response.content)
 
             raise sdkgen.UnknownStatusCodeException("The server returned an unknown status code")
         except RequestException as e:

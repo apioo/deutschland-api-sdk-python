@@ -10,7 +10,7 @@ from typing import List
 
 from .district import District
 from .district_collection import DistrictCollection
-from .message_exception import MessageException
+from .response_exception import ResponseException
 
 class DistrictTag(sdkgen.TagAbstract):
     def __init__(self, http_client: requests.Session, parser: sdkgen.Parser):
@@ -39,11 +39,11 @@ class DistrictTag(sdkgen.TagAbstract):
                 return District.model_validate_json(json_data=response.content)
 
             if response.status_code == 400:
-                raise MessageException(response.content)
+                raise ResponseException(response.content)
             if response.status_code == 404:
-                raise MessageException(response.content)
+                raise ResponseException(response.content)
             if response.status_code == 500:
-                raise MessageException(response.content)
+                raise ResponseException(response.content)
 
             raise sdkgen.UnknownStatusCodeException("The server returned an unknown status code")
         except RequestException as e:
@@ -73,11 +73,11 @@ class DistrictTag(sdkgen.TagAbstract):
                 return DistrictCollection.model_validate_json(json_data=response.content)
 
             if response.status_code == 400:
-                raise MessageException(response.content)
+                raise ResponseException(response.content)
             if response.status_code == 404:
-                raise MessageException(response.content)
+                raise ResponseException(response.content)
             if response.status_code == 500:
-                raise MessageException(response.content)
+                raise ResponseException(response.content)
 
             raise sdkgen.UnknownStatusCodeException("The server returned an unknown status code")
         except RequestException as e:

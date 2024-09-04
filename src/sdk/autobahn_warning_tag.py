@@ -9,7 +9,7 @@ from requests import RequestException
 from typing import List
 
 from .autobahn_warning_collection import AutobahnWarningCollection
-from .message_exception import MessageException
+from .response_exception import ResponseException
 
 class AutobahnWarningTag(sdkgen.TagAbstract):
     def __init__(self, http_client: requests.Session, parser: sdkgen.Parser):
@@ -38,11 +38,11 @@ class AutobahnWarningTag(sdkgen.TagAbstract):
                 return AutobahnWarningCollection.model_validate_json(json_data=response.content)
 
             if response.status_code == 400:
-                raise MessageException(response.content)
+                raise ResponseException(response.content)
             if response.status_code == 404:
-                raise MessageException(response.content)
+                raise ResponseException(response.content)
             if response.status_code == 500:
-                raise MessageException(response.content)
+                raise ResponseException(response.content)
 
             raise sdkgen.UnknownStatusCodeException("The server returned an unknown status code")
         except RequestException as e:
