@@ -13,7 +13,6 @@ class BundesratMember(BaseModel):
     name: Optional[str] = Field(default=None, alias="name")
     party: Optional[str] = Field(default=None, alias="party")
     state: Optional[str] = Field(default=None, alias="state")
-    bundesrat_member: Optional[bool] = Field(default=None, alias="bundesratMember")
     member: Optional[bool] = Field(default=None, alias="member")
     designated: Optional[bool] = Field(default=None, alias="designated")
     url: Optional[str] = Field(default=None, alias="url")
