@@ -11,9 +11,10 @@ The following example shows how you initialize the client:
 from sdk.client import Client
 
 client = Client.buildAnonymous()
+collection = client.state().getAll();
 
-for city in client.city().getAll():
-    print(city.state)
+for state in collection.entries:
+    print(state.name)
 
 ```
 
