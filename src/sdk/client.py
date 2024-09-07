@@ -8,6 +8,7 @@ import sdkgen
 from requests import RequestException
 from typing import List
 
+from .job_tag import JobTag
 from .hospital_tag import HospitalTag
 from .warning_tag import WarningTag
 from .city_tag import CityTag
@@ -22,6 +23,12 @@ from .meta_tag import MetaTag
 class Client(sdkgen.ClientAbstract):
     def __init__(self, base_url: str, credentials: sdkgen.CredentialsInterface):
         super().__init__(base_url, credentials)
+
+    def job(self) -> JobTag:
+        return JobTag(
+            self.http_client,
+            self.parser
+        )
 
     def hospital(self) -> HospitalTag:
         return HospitalTag(
