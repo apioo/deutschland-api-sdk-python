@@ -4,6 +4,8 @@ https://sdkgen.app
 """
 
 import sdkgen
+from typing import Dict
+from typing import Any
 
 from .response import Response
 
@@ -11,7 +13,7 @@ class ResponseException(sdkgen.KnownStatusCodeException):
     payload: Response = None
 
     def __init__(self, payload):
-        self.payload = Response.model_validate_json(json_data=payload)
+        self.payload = payload
 
     def get_payload(self) -> Response:
         return self.payload

@@ -7,6 +7,9 @@ import requests
 import sdkgen
 from requests import RequestException
 from typing import List
+from typing import Dict
+from typing import Any
+from urllib.parse import parse_qs
 
 from .backend_user import BackendUser
 from .common_message import CommonMessage
@@ -18,6 +21,9 @@ class AuthorizationTag(sdkgen.TagAbstract):
 
 
     def get_whoami(self) -> BackendUser:
+        """
+        Returns user data of the current authenticated user
+        """
         try:
             path_params = {}
 
@@ -25,23 +31,35 @@ class AuthorizationTag(sdkgen.TagAbstract):
 
             query_struct_names = []
 
-            url = self.parser.url("/authorization/whoami", path_params)
+            url = self.parser.url('/authorization/whoami', path_params)
 
-            headers = {}
+            options = {}
+            options['headers'] = {}
+            options['params'] = self.parser.query(query_params, query_struct_names)
 
-            response = self.http_client.get(url, headers=headers, params=self.parser.query(query_params, query_struct_names))
+
+
+            response = self.http_client.request('GET', url, **options)
 
             if response.status_code >= 200 and response.status_code < 300:
-                return BackendUser.model_validate_json(json_data=response.content)
+                data = BackendUser.model_validate_json(json_data=response.content)
 
-            if response.status_code == 500:
-                raise CommonMessageException(response.content)
+                return data
 
-            raise sdkgen.UnknownStatusCodeException("The server returned an unknown status code")
+            statusCode = response.status_code
+            if statusCode >= 0 and statusCode <= 999:
+                data = CommonMessage.model_validate_json(json_data=response.content)
+
+                raise CommonMessageException(data)
+
+            raise sdkgen.UnknownStatusCodeException('The server returned an unknown status code: ' + str(statusCode))
         except RequestException as e:
-            raise sdkgen.ClientException("An unknown error occurred: " + str(e))
+            raise sdkgen.ClientException('An unknown error occurred: ' + str(e))
 
     def revoke(self) -> CommonMessage:
+        """
+        Revoke the access token of the current authenticated user
+        """
         try:
             path_params = {}
 
@@ -49,22 +67,30 @@ class AuthorizationTag(sdkgen.TagAbstract):
 
             query_struct_names = []
 
-            url = self.parser.url("/authorization/revoke", path_params)
+            url = self.parser.url('/authorization/revoke', path_params)
 
-            headers = {}
+            options = {}
+            options['headers'] = {}
+            options['params'] = self.parser.query(query_params, query_struct_names)
 
-            response = self.http_client.post(url, headers=headers, params=self.parser.query(query_params, query_struct_names))
+
+
+            response = self.http_client.request('POST', url, **options)
 
             if response.status_code >= 200 and response.status_code < 300:
-                return CommonMessage.model_validate_json(json_data=response.content)
+                data = CommonMessage.model_validate_json(json_data=response.content)
 
-            if response.status_code == 400:
-                raise CommonMessageException(response.content)
-            if response.status_code == 500:
-                raise CommonMessageException(response.content)
+                return data
 
-            raise sdkgen.UnknownStatusCodeException("The server returned an unknown status code")
+            statusCode = response.status_code
+            if statusCode >= 0 and statusCode <= 999:
+                data = CommonMessage.model_validate_json(json_data=response.content)
+
+                raise CommonMessageException(data)
+
+            raise sdkgen.UnknownStatusCodeException('The server returned an unknown status code: ' + str(statusCode))
         except RequestException as e:
-            raise sdkgen.ClientException("An unknown error occurred: " + str(e))
+            raise sdkgen.ClientException('An unknown error occurred: ' + str(e))
+
 
 

@@ -7,7 +7,11 @@ import requests
 import sdkgen
 from requests import RequestException
 from typing import List
+from typing import Dict
+from typing import Any
+from urllib.parse import parse_qs
 
+from .response import Response
 from .response_exception import ResponseException
 from .state import State
 from .state_collection import StateCollection
@@ -23,31 +27,46 @@ class StateTag(sdkgen.TagAbstract):
         """
         try:
             path_params = {}
-            path_params["state_id"] = state_id
+            path_params['state_id'] = state_id
 
             query_params = {}
 
             query_struct_names = []
 
-            url = self.parser.url("/state/:state_id", path_params)
+            url = self.parser.url('/state/:state_id', path_params)
 
-            headers = {}
+            options = {}
+            options['headers'] = {}
+            options['params'] = self.parser.query(query_params, query_struct_names)
 
-            response = self.http_client.get(url, headers=headers, params=self.parser.query(query_params, query_struct_names))
+
+
+            response = self.http_client.request('GET', url, **options)
 
             if response.status_code >= 200 and response.status_code < 300:
-                return State.model_validate_json(json_data=response.content)
+                data = State.model_validate_json(json_data=response.content)
 
-            if response.status_code == 400:
-                raise ResponseException(response.content)
-            if response.status_code == 404:
-                raise ResponseException(response.content)
-            if response.status_code == 500:
-                raise ResponseException(response.content)
+                return data
 
-            raise sdkgen.UnknownStatusCodeException("The server returned an unknown status code")
+            statusCode = response.status_code
+            if statusCode == 400:
+                data = Response.model_validate_json(json_data=response.content)
+
+                raise ResponseException(data)
+
+            if statusCode == 404:
+                data = Response.model_validate_json(json_data=response.content)
+
+                raise ResponseException(data)
+
+            if statusCode == 500:
+                data = Response.model_validate_json(json_data=response.content)
+
+                raise ResponseException(data)
+
+            raise sdkgen.UnknownStatusCodeException('The server returned an unknown status code: ' + str(statusCode))
         except RequestException as e:
-            raise sdkgen.ClientException("An unknown error occurred: " + str(e))
+            raise sdkgen.ClientException('An unknown error occurred: ' + str(e))
 
     def get_all(self, start_index: int, name: str) -> StateCollection:
         """
@@ -57,29 +76,45 @@ class StateTag(sdkgen.TagAbstract):
             path_params = {}
 
             query_params = {}
-            query_params["startIndex"] = start_index
-            query_params["name"] = name
+            query_params['startIndex'] = start_index
+            query_params['name'] = name
 
             query_struct_names = []
 
-            url = self.parser.url("/state", path_params)
+            url = self.parser.url('/state', path_params)
 
-            headers = {}
+            options = {}
+            options['headers'] = {}
+            options['params'] = self.parser.query(query_params, query_struct_names)
 
-            response = self.http_client.get(url, headers=headers, params=self.parser.query(query_params, query_struct_names))
+
+
+            response = self.http_client.request('GET', url, **options)
 
             if response.status_code >= 200 and response.status_code < 300:
-                return StateCollection.model_validate_json(json_data=response.content)
+                data = StateCollection.model_validate_json(json_data=response.content)
 
-            if response.status_code == 400:
-                raise ResponseException(response.content)
-            if response.status_code == 404:
-                raise ResponseException(response.content)
-            if response.status_code == 500:
-                raise ResponseException(response.content)
+                return data
 
-            raise sdkgen.UnknownStatusCodeException("The server returned an unknown status code")
+            statusCode = response.status_code
+            if statusCode == 400:
+                data = Response.model_validate_json(json_data=response.content)
+
+                raise ResponseException(data)
+
+            if statusCode == 404:
+                data = Response.model_validate_json(json_data=response.content)
+
+                raise ResponseException(data)
+
+            if statusCode == 500:
+                data = Response.model_validate_json(json_data=response.content)
+
+                raise ResponseException(data)
+
+            raise sdkgen.UnknownStatusCodeException('The server returned an unknown status code: ' + str(statusCode))
         except RequestException as e:
-            raise sdkgen.ClientException("An unknown error occurred: " + str(e))
+            raise sdkgen.ClientException('An unknown error occurred: ' + str(e))
+
 
 

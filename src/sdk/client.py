@@ -7,37 +7,46 @@ import requests
 import sdkgen
 from requests import RequestException
 from typing import List
+from typing import Dict
+from typing import Any
+from urllib.parse import parse_qs
 
-from .job_tag import JobTag
-from .hospital_tag import HospitalTag
-from .warning_tag import WarningTag
+from .authorization_tag import AuthorizationTag
+from .autobahn_tag import AutobahnTag
+from .bundesrat_tag import BundesratTag
+from .bundestag_tag import BundestagTag
 from .city_tag import CityTag
 from .district_tag import DistrictTag
-from .state_tag import StateTag
-from .bundestag_tag import BundestagTag
-from .bundesrat_tag import BundesratTag
-from .autobahn_tag import AutobahnTag
-from .authorization_tag import AuthorizationTag
+from .hospital_tag import HospitalTag
+from .job_tag import JobTag
 from .meta_tag import MetaTag
+from .state_tag import StateTag
+from .warning_tag import WarningTag
 
 class Client(sdkgen.ClientAbstract):
     def __init__(self, base_url: str, credentials: sdkgen.CredentialsInterface):
         super().__init__(base_url, credentials)
 
-    def job(self) -> JobTag:
-        return JobTag(
+    def authorization(self) -> AuthorizationTag:
+        return AuthorizationTag(
             self.http_client,
             self.parser
         )
 
-    def hospital(self) -> HospitalTag:
-        return HospitalTag(
+    def autobahn(self) -> AutobahnTag:
+        return AutobahnTag(
             self.http_client,
             self.parser
         )
 
-    def warning(self) -> WarningTag:
-        return WarningTag(
+    def bundesrat(self) -> BundesratTag:
+        return BundesratTag(
+            self.http_client,
+            self.parser
+        )
+
+    def bundestag(self) -> BundestagTag:
+        return BundestagTag(
             self.http_client,
             self.parser
         )
@@ -54,32 +63,14 @@ class Client(sdkgen.ClientAbstract):
             self.parser
         )
 
-    def state(self) -> StateTag:
-        return StateTag(
+    def hospital(self) -> HospitalTag:
+        return HospitalTag(
             self.http_client,
             self.parser
         )
 
-    def bundestag(self) -> BundestagTag:
-        return BundestagTag(
-            self.http_client,
-            self.parser
-        )
-
-    def bundesrat(self) -> BundesratTag:
-        return BundesratTag(
-            self.http_client,
-            self.parser
-        )
-
-    def autobahn(self) -> AutobahnTag:
-        return AutobahnTag(
-            self.http_client,
-            self.parser
-        )
-
-    def authorization(self) -> AuthorizationTag:
-        return AuthorizationTag(
+    def job(self) -> JobTag:
+        return JobTag(
             self.http_client,
             self.parser
         )
@@ -90,13 +81,25 @@ class Client(sdkgen.ClientAbstract):
             self.parser
         )
 
+    def state(self) -> StateTag:
+        return StateTag(
+            self.http_client,
+            self.parser
+        )
+
+    def warning(self) -> WarningTag:
+        return WarningTag(
+            self.http_client,
+            self.parser
+        )
+
 
 
     @staticmethod
     def build(clientId: str, clientSecret: str, tokenStore: sdkgen.TokenStoreInterface, scopes: List[str]):
-        return Client("https://api.deutschland-api.dev/", sdkgen.OAuth2(clientId, clientSecret, "https://api.deutschland-api.dev/authorization/token", "", tokenStore, scopes))
+        return Client("http://localhost", sdkgen.OAuth2(clientId, clientSecret, "http://localhost/authorization/token", "http://localhost/authorization/authorize", tokenStore, scopes))
 
 
     @staticmethod
     def buildAnonymous():
-        return Client("https://api.deutschland-api.dev/", sdkgen.Anonymous())
+        return Client("http://localhost", sdkgen.Anonymous())

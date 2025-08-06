@@ -7,9 +7,13 @@ import requests
 import sdkgen
 from requests import RequestException
 from typing import List
+from typing import Dict
+from typing import Any
+from urllib.parse import parse_qs
 
 from .bundestag_member import BundestagMember
 from .bundestag_member_collection import BundestagMemberCollection
+from .response import Response
 from .response_exception import ResponseException
 
 class BundestagMemberTag(sdkgen.TagAbstract):
@@ -23,31 +27,46 @@ class BundestagMemberTag(sdkgen.TagAbstract):
         """
         try:
             path_params = {}
-            path_params["member_id"] = member_id
+            path_params['member_id'] = member_id
 
             query_params = {}
 
             query_struct_names = []
 
-            url = self.parser.url("/bundestag/member/:member_id", path_params)
+            url = self.parser.url('/bundestag/member/:member_id', path_params)
 
-            headers = {}
+            options = {}
+            options['headers'] = {}
+            options['params'] = self.parser.query(query_params, query_struct_names)
 
-            response = self.http_client.get(url, headers=headers, params=self.parser.query(query_params, query_struct_names))
+
+
+            response = self.http_client.request('GET', url, **options)
 
             if response.status_code >= 200 and response.status_code < 300:
-                return BundestagMember.model_validate_json(json_data=response.content)
+                data = BundestagMember.model_validate_json(json_data=response.content)
 
-            if response.status_code == 400:
-                raise ResponseException(response.content)
-            if response.status_code == 404:
-                raise ResponseException(response.content)
-            if response.status_code == 500:
-                raise ResponseException(response.content)
+                return data
 
-            raise sdkgen.UnknownStatusCodeException("The server returned an unknown status code")
+            statusCode = response.status_code
+            if statusCode == 400:
+                data = Response.model_validate_json(json_data=response.content)
+
+                raise ResponseException(data)
+
+            if statusCode == 404:
+                data = Response.model_validate_json(json_data=response.content)
+
+                raise ResponseException(data)
+
+            if statusCode == 500:
+                data = Response.model_validate_json(json_data=response.content)
+
+                raise ResponseException(data)
+
+            raise sdkgen.UnknownStatusCodeException('The server returned an unknown status code: ' + str(statusCode))
         except RequestException as e:
-            raise sdkgen.ClientException("An unknown error occurred: " + str(e))
+            raise sdkgen.ClientException('An unknown error occurred: ' + str(e))
 
     def get_all(self) -> BundestagMemberCollection:
         """
@@ -60,24 +79,40 @@ class BundestagMemberTag(sdkgen.TagAbstract):
 
             query_struct_names = []
 
-            url = self.parser.url("/bundestag/member", path_params)
+            url = self.parser.url('/bundestag/member', path_params)
 
-            headers = {}
+            options = {}
+            options['headers'] = {}
+            options['params'] = self.parser.query(query_params, query_struct_names)
 
-            response = self.http_client.get(url, headers=headers, params=self.parser.query(query_params, query_struct_names))
+
+
+            response = self.http_client.request('GET', url, **options)
 
             if response.status_code >= 200 and response.status_code < 300:
-                return BundestagMemberCollection.model_validate_json(json_data=response.content)
+                data = BundestagMemberCollection.model_validate_json(json_data=response.content)
 
-            if response.status_code == 400:
-                raise ResponseException(response.content)
-            if response.status_code == 404:
-                raise ResponseException(response.content)
-            if response.status_code == 500:
-                raise ResponseException(response.content)
+                return data
 
-            raise sdkgen.UnknownStatusCodeException("The server returned an unknown status code")
+            statusCode = response.status_code
+            if statusCode == 400:
+                data = Response.model_validate_json(json_data=response.content)
+
+                raise ResponseException(data)
+
+            if statusCode == 404:
+                data = Response.model_validate_json(json_data=response.content)
+
+                raise ResponseException(data)
+
+            if statusCode == 500:
+                data = Response.model_validate_json(json_data=response.content)
+
+                raise ResponseException(data)
+
+            raise sdkgen.UnknownStatusCodeException('The server returned an unknown status code: ' + str(statusCode))
         except RequestException as e:
-            raise sdkgen.ClientException("An unknown error occurred: " + str(e))
+            raise sdkgen.ClientException('An unknown error occurred: ' + str(e))
+
 
 

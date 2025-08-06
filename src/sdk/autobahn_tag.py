@@ -7,26 +7,24 @@ import requests
 import sdkgen
 from requests import RequestException
 from typing import List
+from typing import Dict
+from typing import Any
+from urllib.parse import parse_qs
 
 from .autobahn_charging_station_tag import AutobahnChargingStationTag
 from .autobahn_closure_tag import AutobahnClosureTag
 from .autobahn_collection import AutobahnCollection
 from .autobahn_parking_lorry_tag import AutobahnParkingLorryTag
 from .autobahn_warning_tag import AutobahnWarningTag
+from .response import Response
 from .response_exception import ResponseException
 
 class AutobahnTag(sdkgen.TagAbstract):
     def __init__(self, http_client: requests.Session, parser: sdkgen.Parser):
         super().__init__(http_client, parser)
 
-    def warning(self) -> AutobahnWarningTag:
-        return AutobahnWarningTag(
-            self.http_client,
-            self.parser
-        )
-
-    def parking_lorry(self) -> AutobahnParkingLorryTag:
-        return AutobahnParkingLorryTag(
+    def charging_station(self) -> AutobahnChargingStationTag:
+        return AutobahnChargingStationTag(
             self.http_client,
             self.parser
         )
@@ -37,8 +35,14 @@ class AutobahnTag(sdkgen.TagAbstract):
             self.parser
         )
 
-    def charging_station(self) -> AutobahnChargingStationTag:
-        return AutobahnChargingStationTag(
+    def parking_lorry(self) -> AutobahnParkingLorryTag:
+        return AutobahnParkingLorryTag(
+            self.http_client,
+            self.parser
+        )
+
+    def warning(self) -> AutobahnWarningTag:
+        return AutobahnWarningTag(
             self.http_client,
             self.parser
         )
@@ -55,24 +59,40 @@ class AutobahnTag(sdkgen.TagAbstract):
 
             query_struct_names = []
 
-            url = self.parser.url("/autobahn", path_params)
+            url = self.parser.url('/autobahn', path_params)
 
-            headers = {}
+            options = {}
+            options['headers'] = {}
+            options['params'] = self.parser.query(query_params, query_struct_names)
 
-            response = self.http_client.get(url, headers=headers, params=self.parser.query(query_params, query_struct_names))
+
+
+            response = self.http_client.request('GET', url, **options)
 
             if response.status_code >= 200 and response.status_code < 300:
-                return AutobahnCollection.model_validate_json(json_data=response.content)
+                data = AutobahnCollection.model_validate_json(json_data=response.content)
 
-            if response.status_code == 400:
-                raise ResponseException(response.content)
-            if response.status_code == 404:
-                raise ResponseException(response.content)
-            if response.status_code == 500:
-                raise ResponseException(response.content)
+                return data
 
-            raise sdkgen.UnknownStatusCodeException("The server returned an unknown status code")
+            statusCode = response.status_code
+            if statusCode == 400:
+                data = Response.model_validate_json(json_data=response.content)
+
+                raise ResponseException(data)
+
+            if statusCode == 404:
+                data = Response.model_validate_json(json_data=response.content)
+
+                raise ResponseException(data)
+
+            if statusCode == 500:
+                data = Response.model_validate_json(json_data=response.content)
+
+                raise ResponseException(data)
+
+            raise sdkgen.UnknownStatusCodeException('The server returned an unknown status code: ' + str(statusCode))
         except RequestException as e:
-            raise sdkgen.ClientException("An unknown error occurred: " + str(e))
+            raise sdkgen.ClientException('An unknown error occurred: ' + str(e))
+
 
 

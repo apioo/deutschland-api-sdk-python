@@ -7,9 +7,13 @@ import requests
 import sdkgen
 from requests import RequestException
 from typing import List
+from typing import Dict
+from typing import Any
+from urllib.parse import parse_qs
 
 from .city import City
 from .city_collection import CityCollection
+from .response import Response
 from .response_exception import ResponseException
 
 class CityTag(sdkgen.TagAbstract):
@@ -23,31 +27,46 @@ class CityTag(sdkgen.TagAbstract):
         """
         try:
             path_params = {}
-            path_params["city_id"] = city_id
+            path_params['city_id'] = city_id
 
             query_params = {}
 
             query_struct_names = []
 
-            url = self.parser.url("/city/:city_id", path_params)
+            url = self.parser.url('/city/:city_id', path_params)
 
-            headers = {}
+            options = {}
+            options['headers'] = {}
+            options['params'] = self.parser.query(query_params, query_struct_names)
 
-            response = self.http_client.get(url, headers=headers, params=self.parser.query(query_params, query_struct_names))
+
+
+            response = self.http_client.request('GET', url, **options)
 
             if response.status_code >= 200 and response.status_code < 300:
-                return City.model_validate_json(json_data=response.content)
+                data = City.model_validate_json(json_data=response.content)
 
-            if response.status_code == 400:
-                raise ResponseException(response.content)
-            if response.status_code == 404:
-                raise ResponseException(response.content)
-            if response.status_code == 500:
-                raise ResponseException(response.content)
+                return data
 
-            raise sdkgen.UnknownStatusCodeException("The server returned an unknown status code")
+            statusCode = response.status_code
+            if statusCode == 400:
+                data = Response.model_validate_json(json_data=response.content)
+
+                raise ResponseException(data)
+
+            if statusCode == 404:
+                data = Response.model_validate_json(json_data=response.content)
+
+                raise ResponseException(data)
+
+            if statusCode == 500:
+                data = Response.model_validate_json(json_data=response.content)
+
+                raise ResponseException(data)
+
+            raise sdkgen.UnknownStatusCodeException('The server returned an unknown status code: ' + str(statusCode))
         except RequestException as e:
-            raise sdkgen.ClientException("An unknown error occurred: " + str(e))
+            raise sdkgen.ClientException('An unknown error occurred: ' + str(e))
 
     def get_all(self, start_index: int, state: str, district: str, name: str, zip_code: str) -> CityCollection:
         """
@@ -57,32 +76,48 @@ class CityTag(sdkgen.TagAbstract):
             path_params = {}
 
             query_params = {}
-            query_params["startIndex"] = start_index
-            query_params["state"] = state
-            query_params["district"] = district
-            query_params["name"] = name
-            query_params["zipCode"] = zip_code
+            query_params['startIndex'] = start_index
+            query_params['state'] = state
+            query_params['district'] = district
+            query_params['name'] = name
+            query_params['zipCode'] = zip_code
 
             query_struct_names = []
 
-            url = self.parser.url("/city", path_params)
+            url = self.parser.url('/city', path_params)
 
-            headers = {}
+            options = {}
+            options['headers'] = {}
+            options['params'] = self.parser.query(query_params, query_struct_names)
 
-            response = self.http_client.get(url, headers=headers, params=self.parser.query(query_params, query_struct_names))
+
+
+            response = self.http_client.request('GET', url, **options)
 
             if response.status_code >= 200 and response.status_code < 300:
-                return CityCollection.model_validate_json(json_data=response.content)
+                data = CityCollection.model_validate_json(json_data=response.content)
 
-            if response.status_code == 400:
-                raise ResponseException(response.content)
-            if response.status_code == 404:
-                raise ResponseException(response.content)
-            if response.status_code == 500:
-                raise ResponseException(response.content)
+                return data
 
-            raise sdkgen.UnknownStatusCodeException("The server returned an unknown status code")
+            statusCode = response.status_code
+            if statusCode == 400:
+                data = Response.model_validate_json(json_data=response.content)
+
+                raise ResponseException(data)
+
+            if statusCode == 404:
+                data = Response.model_validate_json(json_data=response.content)
+
+                raise ResponseException(data)
+
+            if statusCode == 500:
+                data = Response.model_validate_json(json_data=response.content)
+
+                raise ResponseException(data)
+
+            raise sdkgen.UnknownStatusCodeException('The server returned an unknown status code: ' + str(statusCode))
         except RequestException as e:
-            raise sdkgen.ClientException("An unknown error occurred: " + str(e))
+            raise sdkgen.ClientException('An unknown error occurred: ' + str(e))
+
 
 
