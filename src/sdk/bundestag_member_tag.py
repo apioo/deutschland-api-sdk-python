@@ -23,7 +23,7 @@ class BundestagMemberTag(sdkgen.TagAbstract):
 
     def get(self, member_id: str) -> BundestagMember:
         """
-        Returns specific member of the Bundestag
+        Returns a specific member of the Bundestag
         """
         try:
             path_params = {}
