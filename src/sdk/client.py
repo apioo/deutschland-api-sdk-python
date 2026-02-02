@@ -20,6 +20,7 @@ from .district_tag import DistrictTag
 from .hospital_tag import HospitalTag
 from .job_tag import JobTag
 from .meta_tag import MetaTag
+from .news_tag import NewsTag
 from .state_tag import StateTag
 from .warning_tag import WarningTag
 
@@ -77,6 +78,12 @@ class Client(sdkgen.ClientAbstract):
 
     def meta(self) -> MetaTag:
         return MetaTag(
+            self.http_client,
+            self.parser
+        )
+
+    def news(self) -> NewsTag:
+        return NewsTag(
             self.http_client,
             self.parser
         )
