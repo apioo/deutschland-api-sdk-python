@@ -11,6 +11,5 @@ from .autobahn_closure import AutobahnClosure
 
 class AutobahnClosureCollection(BaseModel):
     entries: Optional[List[AutobahnClosure]] = Field(default=None, alias="entries")
-    pass
 
 

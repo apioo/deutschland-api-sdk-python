@@ -18,6 +18,5 @@ class Job(BaseModel):
     employer: Optional[str] = Field(default=None, alias="employer")
     publish_date: Optional[datetime.datetime] = Field(default=None, alias="publishDate")
     entrance_date: Optional[datetime.datetime] = Field(default=None, alias="entranceDate")
-    pass
 
 

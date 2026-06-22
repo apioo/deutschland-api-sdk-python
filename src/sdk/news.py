@@ -14,6 +14,5 @@ class News(BaseModel):
     title: Optional[str] = Field(default=None, alias="title")
     link: Optional[str] = Field(default=None, alias="link")
     updated: Optional[datetime.datetime] = Field(default=None, alias="updated")
-    pass
 
 

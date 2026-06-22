@@ -10,6 +10,5 @@ from typing import Any, Dict, Generic, List, Optional, TypeVar, Annotated, Union
 
 class AutobahnCollection(BaseModel):
     roads: Optional[List[str]] = Field(default=None, alias="roads")
-    pass
 
 

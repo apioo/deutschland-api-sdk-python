@@ -15,6 +15,5 @@ class JobLocation(BaseModel):
     state: Optional[str] = Field(default=None, alias="state")
     country: Optional[str] = Field(default=None, alias="country")
     coordinate: Optional[JobCoordinate] = Field(default=None, alias="coordinate")
-    pass
 
 

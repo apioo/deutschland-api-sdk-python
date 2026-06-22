@@ -13,6 +13,7 @@ from urllib.parse import parse_qs
 
 from .authorization_tag import AuthorizationTag
 from .autobahn_tag import AutobahnTag
+from .budget_tag import BudgetTag
 from .bundesrat_tag import BundesratTag
 from .bundestag_tag import BundestagTag
 from .city_tag import CityTag
@@ -36,6 +37,12 @@ class Client(sdkgen.ClientAbstract):
 
     def autobahn(self) -> AutobahnTag:
         return AutobahnTag(
+            self.http_client,
+            self.parser
+        )
+
+    def budget(self) -> BudgetTag:
+        return BudgetTag(
             self.http_client,
             self.parser
         )

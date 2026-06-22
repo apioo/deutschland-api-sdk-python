@@ -20,6 +20,5 @@ class AutobahnWarning(BaseModel):
     start_date: Optional[datetime.datetime] = Field(default=None, alias="startDate")
     coordinate: Optional[AutobahnCoordinate] = Field(default=None, alias="coordinate")
     line_string: Optional[List[AutobahnCoordinate]] = Field(default=None, alias="lineString")
-    pass
 
 

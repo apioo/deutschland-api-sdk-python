@@ -11,6 +11,5 @@ from .bundestag_member import BundestagMember
 
 class BundestagMemberCollection(BaseModel):
     entries: Optional[List[BundestagMember]] = Field(default=None, alias="entries")
-    pass
 
 

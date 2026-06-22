@@ -15,6 +15,5 @@ class District(BaseModel):
     name: Optional[str] = Field(default=None, alias="name")
     nuts_: Optional[str] = Field(default=None, alias="nuts3")
     area: Optional[int] = Field(default=None, alias="area")
-    pass
 
 

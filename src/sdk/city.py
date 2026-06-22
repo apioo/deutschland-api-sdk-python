@@ -18,6 +18,5 @@ class City(BaseModel):
     name: Optional[str] = Field(default=None, alias="name")
     zip_code: Optional[str] = Field(default=None, alias="zipCode")
     area: Optional[int] = Field(default=None, alias="area")
-    pass
 
 

@@ -11,6 +11,5 @@ from .autobahn_warning import AutobahnWarning
 
 class AutobahnWarningCollection(BaseModel):
     entries: Optional[List[AutobahnWarning]] = Field(default=None, alias="entries")
-    pass
 
 

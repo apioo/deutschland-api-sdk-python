@@ -12,6 +12,5 @@ class State(BaseModel):
     id: Optional[str] = Field(default=None, alias="id")
     name: Optional[str] = Field(default=None, alias="name")
     area: Optional[int] = Field(default=None, alias="area")
-    pass
 
 

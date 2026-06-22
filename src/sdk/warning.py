@@ -17,6 +17,5 @@ class Warning(BaseModel):
     title: Optional[str] = Field(default=None, alias="title")
     start_date: Optional[datetime.datetime] = Field(default=None, alias="startDate")
     expires_date: Optional[datetime.datetime] = Field(default=None, alias="expiresDate")
-    pass
 
 

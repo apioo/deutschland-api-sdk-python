@@ -23,6 +23,5 @@ class BundesratMember(BaseModel):
     detail: Optional[str] = Field(default=None, alias="detail")
     bio: Optional[str] = Field(default=None, alias="bio")
     address: Optional[str] = Field(default=None, alias="address")
-    pass
 
 

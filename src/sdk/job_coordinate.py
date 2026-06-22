@@ -13,6 +13,5 @@ class JobCoordinate(BaseModel):
     title: Optional[str] = Field(default=None, alias="title")
     address: Optional[str] = Field(default=None, alias="address")
     link: Optional[str] = Field(default=None, alias="link")
-    pass
 
 

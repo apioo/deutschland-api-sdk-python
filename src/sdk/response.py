@@ -11,6 +11,5 @@ from typing import Any, Dict, Generic, List, Optional, TypeVar, Annotated, Union
 class Response(BaseModel):
     success: Optional[bool] = Field(default=None, alias="success")
     message: Optional[str] = Field(default=None, alias="message")
-    pass
 
 

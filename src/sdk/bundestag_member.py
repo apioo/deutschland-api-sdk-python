@@ -22,6 +22,5 @@ class BundestagMember(BaseModel):
     photo_large: Optional[str] = Field(default=None, alias="photoLarge")
     photo_last_changed: Optional[datetime.datetime] = Field(default=None, alias="photoLastChanged")
     last_changed: Optional[datetime.datetime] = Field(default=None, alias="lastChanged")
-    pass
 
 

@@ -11,6 +11,5 @@ from typing import Any, Dict, Generic, List, Optional, TypeVar, Annotated, Union
 class BundestagConstituency(BaseModel):
     number: Optional[str] = Field(default=None, alias="number")
     name: Optional[str] = Field(default=None, alias="name")
-    pass
 
 

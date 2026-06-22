@@ -11,6 +11,5 @@ from typing import Any, Dict, Generic, List, Optional, TypeVar, Annotated, Union
 class AutobahnCoordinate(BaseModel):
     lat: Optional[str] = Field(default=None, alias="lat")
     long: Optional[str] = Field(default=None, alias="long")
-    pass
 
 

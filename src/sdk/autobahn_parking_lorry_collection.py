@@ -11,6 +11,5 @@ from .autobahn_parking_lorry import AutobahnParkingLorry
 
 class AutobahnParkingLorryCollection(BaseModel):
     entries: Optional[List[AutobahnParkingLorry]] = Field(default=None, alias="entries")
-    pass
 
 

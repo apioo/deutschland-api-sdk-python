@@ -11,6 +11,5 @@ from .autobahn_charging_station import AutobahnChargingStation
 
 class AutobahnChargingStationCollection(BaseModel):
     entries: Optional[List[AutobahnChargingStation]] = Field(default=None, alias="entries")
-    pass
 
 

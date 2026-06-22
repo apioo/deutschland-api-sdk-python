@@ -14,6 +14,5 @@ class AutobahnChargingStation(BaseModel):
     title: Optional[str] = Field(default=None, alias="title")
     description: Optional[List[str]] = Field(default=None, alias="description")
     coordinate: Optional[AutobahnCoordinate] = Field(default=None, alias="coordinate")
-    pass
 
 

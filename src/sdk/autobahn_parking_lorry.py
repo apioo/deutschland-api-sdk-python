@@ -16,6 +16,5 @@ class AutobahnParkingLorry(BaseModel):
     description: Optional[List[str]] = Field(default=None, alias="description")
     coordinate: Optional[AutobahnCoordinate] = Field(default=None, alias="coordinate")
     features: Optional[List[str]] = Field(default=None, alias="features")
-    pass
 
 
