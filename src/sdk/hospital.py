@@ -5,7 +5,7 @@ https://sdkgen.app
 
 from pydantic import BaseModel, Field, GetCoreSchemaHandler, Tag
 from pydantic_core import CoreSchema, core_schema
-from typing import Any, Dict, Generic, List, Optional, TypeVar, Annotated, Union
+from typing import Any, Dict, Generic, List, Optional, TypeVar, Annotated, Union, Literal
 
 
 class Hospital(BaseModel):
@@ -13,6 +13,5 @@ class Hospital(BaseModel):
     title: Optional[str] = Field(default=None, alias="title")
     address: Optional[str] = Field(default=None, alias="address")
     link: Optional[str] = Field(default=None, alias="link")
-    pass
 
 

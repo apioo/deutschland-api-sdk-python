@@ -5,7 +5,7 @@ https://sdkgen.app
 
 from pydantic import BaseModel, Field, GetCoreSchemaHandler, Tag
 from pydantic_core import CoreSchema, core_schema
-from typing import Any, Dict, Generic, List, Optional, TypeVar, Annotated, Union
+from typing import Any, Dict, Generic, List, Optional, TypeVar, Annotated, Union, Literal
 
 
 T = TypeVar("T")
@@ -14,6 +14,5 @@ class Collection(BaseModel, Generic[T]):
     start_index: Optional[int] = Field(default=None, alias="startIndex")
     items_per_page: Optional[int] = Field(default=None, alias="itemsPerPage")
     entries: Optional[List[T]] = Field(default=None, alias="entries")
-    pass
 
 

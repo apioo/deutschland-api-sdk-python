@@ -5,12 +5,11 @@ https://sdkgen.app
 
 from pydantic import BaseModel, Field, GetCoreSchemaHandler, Tag
 from pydantic_core import CoreSchema, core_schema
-from typing import Any, Dict, Generic, List, Optional, TypeVar, Annotated, Union
+from typing import Any, Dict, Generic, List, Optional, TypeVar, Annotated, Union, Literal
 from .autobahn_warning import AutobahnWarning
 
 
 class AutobahnWarningCollection(BaseModel):
     entries: Optional[List[AutobahnWarning]] = Field(default=None, alias="entries")
-    pass
 
 

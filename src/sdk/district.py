@@ -5,7 +5,7 @@ https://sdkgen.app
 
 from pydantic import BaseModel, Field, GetCoreSchemaHandler, Tag
 from pydantic_core import CoreSchema, core_schema
-from typing import Any, Dict, Generic, List, Optional, TypeVar, Annotated, Union
+from typing import Any, Dict, Generic, List, Optional, TypeVar, Annotated, Union, Literal
 
 
 class District(BaseModel):
@@ -15,6 +15,5 @@ class District(BaseModel):
     name: Optional[str] = Field(default=None, alias="name")
     nuts_: Optional[str] = Field(default=None, alias="nuts3")
     area: Optional[int] = Field(default=None, alias="area")
-    pass
 
 

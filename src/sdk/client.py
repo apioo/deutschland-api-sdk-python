@@ -13,6 +13,7 @@ from urllib.parse import parse_qs
 
 from .authorization_tag import AuthorizationTag
 from .autobahn_tag import AutobahnTag
+from .budget_tag import BudgetTag
 from .bundesrat_tag import BundesratTag
 from .bundestag_tag import BundestagTag
 from .city_tag import CityTag
@@ -20,6 +21,7 @@ from .district_tag import DistrictTag
 from .hospital_tag import HospitalTag
 from .job_tag import JobTag
 from .meta_tag import MetaTag
+from .news_tag import NewsTag
 from .state_tag import StateTag
 from .warning_tag import WarningTag
 
@@ -35,6 +37,12 @@ class Client(sdkgen.ClientAbstract):
 
     def autobahn(self) -> AutobahnTag:
         return AutobahnTag(
+            self.http_client,
+            self.parser
+        )
+
+    def budget(self) -> BudgetTag:
+        return BudgetTag(
             self.http_client,
             self.parser
         )
@@ -77,6 +85,12 @@ class Client(sdkgen.ClientAbstract):
 
     def meta(self) -> MetaTag:
         return MetaTag(
+            self.http_client,
+            self.parser
+        )
+
+    def news(self) -> NewsTag:
+        return NewsTag(
             self.http_client,
             self.parser
         )

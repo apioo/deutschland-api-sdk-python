@@ -5,7 +5,7 @@ https://sdkgen.app
 
 from pydantic import BaseModel, Field, GetCoreSchemaHandler, Tag
 from pydantic_core import CoreSchema, core_schema
-from typing import Any, Dict, Generic, List, Optional, TypeVar, Annotated, Union
+from typing import Any, Dict, Generic, List, Optional, TypeVar, Annotated, Union, Literal
 from .autobahn_coordinate import AutobahnCoordinate
 
 
@@ -16,6 +16,5 @@ class AutobahnParkingLorry(BaseModel):
     description: Optional[List[str]] = Field(default=None, alias="description")
     coordinate: Optional[AutobahnCoordinate] = Field(default=None, alias="coordinate")
     features: Optional[List[str]] = Field(default=None, alias="features")
-    pass
 
 

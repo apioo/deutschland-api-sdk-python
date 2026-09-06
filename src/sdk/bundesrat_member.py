@@ -5,7 +5,7 @@ https://sdkgen.app
 
 from pydantic import BaseModel, Field, GetCoreSchemaHandler, Tag
 from pydantic_core import CoreSchema, core_schema
-from typing import Any, Dict, Generic, List, Optional, TypeVar, Annotated, Union
+from typing import Any, Dict, Generic, List, Optional, TypeVar, Annotated, Union, Literal
 import datetime
 
 
@@ -23,6 +23,5 @@ class BundesratMember(BaseModel):
     detail: Optional[str] = Field(default=None, alias="detail")
     bio: Optional[str] = Field(default=None, alias="bio")
     address: Optional[str] = Field(default=None, alias="address")
-    pass
 
 

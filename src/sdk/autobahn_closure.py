@@ -5,7 +5,7 @@ https://sdkgen.app
 
 from pydantic import BaseModel, Field, GetCoreSchemaHandler, Tag
 from pydantic_core import CoreSchema, core_schema
-from typing import Any, Dict, Generic, List, Optional, TypeVar, Annotated, Union
+from typing import Any, Dict, Generic, List, Optional, TypeVar, Annotated, Union, Literal
 import datetime
 from .autobahn_coordinate import AutobahnCoordinate
 
@@ -20,6 +20,5 @@ class AutobahnClosure(BaseModel):
     start_date: Optional[datetime.datetime] = Field(default=None, alias="startDate")
     coordinate: Optional[AutobahnCoordinate] = Field(default=None, alias="coordinate")
     line_string: Optional[List[AutobahnCoordinate]] = Field(default=None, alias="lineString")
-    pass
 
 

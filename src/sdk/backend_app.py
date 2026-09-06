@@ -5,7 +5,7 @@ https://sdkgen.app
 
 from pydantic import BaseModel, Field, GetCoreSchemaHandler, Tag
 from pydantic_core import CoreSchema, core_schema
-from typing import Any, Dict, Generic, List, Optional, TypeVar, Annotated, Union
+from typing import Any, Dict, Generic, List, Optional, TypeVar, Annotated, Union, Literal
 import datetime
 from .common_metadata import CommonMetadata
 from .backend_token import BackendToken
@@ -25,6 +25,5 @@ class BackendApp(BaseModel):
     date: Optional[datetime.datetime] = Field(default=None, alias="date")
     scopes: Optional[List[str]] = Field(default=None, alias="scopes")
     tokens: Optional[List[BackendToken]] = Field(default=None, alias="tokens")
-    pass
 
 

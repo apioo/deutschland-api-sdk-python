@@ -5,7 +5,7 @@ https://sdkgen.app
 
 from pydantic import BaseModel, Field, GetCoreSchemaHandler, Tag
 from pydantic_core import CoreSchema, core_schema
-from typing import Any, Dict, Generic, List, Optional, TypeVar, Annotated, Union
+from typing import Any, Dict, Generic, List, Optional, TypeVar, Annotated, Union, Literal
 import datetime
 
 
@@ -18,6 +18,5 @@ class BackendToken(BaseModel):
     ip: Optional[str] = Field(default=None, alias="ip")
     expire: Optional[datetime.datetime] = Field(default=None, alias="expire")
     date: Optional[datetime.datetime] = Field(default=None, alias="date")
-    pass
 
 
