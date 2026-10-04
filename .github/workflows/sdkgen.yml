@@ -58,7 +58,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/p/{{name}}
+      url: https://pypi.org/p/deutschland-api-sdk
     permissions:
       # IMPORTANT: this permission is mandatory for Trusted Publishing
       id-token: write
